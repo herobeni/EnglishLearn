@@ -4,14 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnglishLearn.Views"
-        xmlns:UserControls="clr-namespace:EnglishLearn.Views"
         xmlns:ViewModels="clr-namespace:EnglishLearn.ViewModels"
+        xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:command1="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900">
     <Window.DataContext>
         <ViewModels:MainWindowVM/>
     </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <command1:EventToCommand Command="{Binding WindowClosing}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid >
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="686"/>
             <ColumnDefinition Width="206"/>
@@ -37,7 +45,12 @@
             <TextBox Text="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="20" Width="214"/>
             <Button Width="25" Content="+" Focusable="False" Command="{Binding buttonCommand}" />
         </StackPanel>
-        
+        <StackPanel Grid.Column="1" Grid.RowSpan="3">
+            <Button Height="31" Margin="2" Content="Сортировка по дате" Command="{Binding sortCommand}" CommandParameter="1"/>
+            <Button Height="31" Margin="2" Content="Сортировка по алфавиту" Command="{Binding sortCommand}" CommandParameter="2"/>
+            <Button Height="31" Margin="2" Content="Сортировка по переводу" Command="{Binding sortCommand}" CommandParameter="3"/>
+        </StackPanel>
         
     </Grid>
+    
 </Window>

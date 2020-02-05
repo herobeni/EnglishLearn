@@ -45,3 +45,7 @@ C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\ja\Microsoft.Exp
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\ko\Microsoft.Expression.Interactions.resources.dll
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\zh-Hans\Microsoft.Expression.Interactions.resources.dll
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\zh-Hant\Microsoft.Expression.Interactions.resources.dll
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\ListViewControl.g.cs
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\SortButtonsControl.g.cs
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\ListViewControl.baml
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\SortButtonsControl.baml

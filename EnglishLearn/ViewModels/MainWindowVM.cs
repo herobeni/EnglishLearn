@@ -23,13 +23,7 @@ namespace EnglishLearn.ViewModels
     {
         public ICommand buttonCommand { get; private set; }
         public ICommand sortCommand { get; private set; }
-        public CollectionViewSource ViewList { get; set; }
-        private ObservableCollection<Words> wordsList;
-        public ReadOnlyObservableCollection<Words> WordsList
-        {
-            get { return new ReadOnlyObservableCollection<Words>(wordsList); }
-        }
-
+        public ICommand deleteCommand { get; private set; }
         public ICommand WindowClosing
         {
             get
@@ -37,23 +31,60 @@ namespace EnglishLearn.ViewModels
                 return new RelayCommand<CancelEventArgs>(
                     (args) =>
                     {
-                        using (FileStream fl = new FileStream("Words.dat",FileMode.Create))
+                        using(FileStream fl = new FileStream("Words.dat",FileMode.Create))
                         {
                             BinaryFormatter formatter = new BinaryFormatter();
                             formatter.Serialize(fl,wordsList);
+                        }
+                        
+                    });
+            }
+        }
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return new RelayCommand<CancelEventArgs>(
+                    (args) =>
+                    {
+                        wordsSearch= new ObservableCollection<Words>();
+                        if(AddWord == null && AddTranslation == null && AddTranscription == null)
+                        {
+                            ViewList.Source = wordsList;
+                            ViewList.View.Refresh();
+                        }
+                        else
+                        {
+                            AddWord = AddWord ?? " ";
+                            AddTranslation = AddTranslation ?? " ";
+                            AddTranslation = AddTranslation ?? " ";
+                            var SearchWords = from Words in wordsList
+                                where Words.Word.ToLower().StartsWith(AddWord.ToLower()) 
+                                      ||
+                                      Words.Translation.ToLower().StartsWith(AddTranslation.ToLower()) 
+                                      ||
+                                      Words.Transcription.ToLower().StartsWith(AddTranscription.ToLower())
+                                select Words;
+                            foreach(var VARIABLE in SearchWords)
+                            {
+                                wordsSearch.Add(VARIABLE);
+                            }
+
+                            ViewList.Source = wordsSearch;
+                            ViewList.View.Refresh();
                         }
 
                     });
             }
         }
-        private string addWord;
+        private string _addWord;
         public string AddWord
         {
-            get { return addWord; }
+            get { return _addWord; }
             set
             {
-                addWord = value;
-                RaisePropertyChanged(AddWord);
+                _addWord = value;
+                RaisePropertyChanged("AddWord");
             }
         }
         private string _addTranslation;
@@ -63,39 +94,61 @@ namespace EnglishLearn.ViewModels
             set
             {
                 _addTranslation = value;
-                RaisePropertyChanged(AddTranslation);
+                RaisePropertyChanged("AddTranslation");
             }
         }
         private string _addTranscription;
-
         public string AddTranscription
         {
             get { return _addTranscription; }
             set
             {
                 _addTranscription = value;
-                RaisePropertyChanged(AddTranscription);
+                RaisePropertyChanged("AddTranscription");
             }
         }
-
+        private Words _selectedItem;
+        public Words SelectedItemWords
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                RaisePropertyChanged("SelectedItemWords");
+            }
+        }
+        public CollectionViewSource ViewList { get; set; }
+        private ObservableCollection<Words> wordsSearch;
+        private ObservableCollection<Words> wordsList;
+        public ReadOnlyObservableCollection<Words> WordsList
+        {
+            get { return new ReadOnlyObservableCollection<Words>(wordsList); }
+        }
         public MainWindowVM()
         {
             
-            using (FileStream fs = new FileStream("Words.dat",FileMode.Open))
+            using (FileStream fs = new FileStream("Words.dat",FileMode.OpenOrCreate))
             {
                 BinaryFormatter formater = new BinaryFormatter();
+                if(fs.Length>0)
                 wordsList = (ObservableCollection<Words>) formater.Deserialize(fs);
+                else wordsList= new ObservableCollection<Words>();
             }
+            deleteCommand= new DeleteCommand(this);
             buttonCommand= new AddWordCommand(this);
             sortCommand = new SortCommand(this);
             ViewList= new CollectionViewSource();
             ViewList.Source = wordsList;
         }
-
-        
         public void AddNewWord()
         {
             wordsList.Add(new Words(AddWord,AddTranslation,AddTranscription));
+            ViewList.View.Refresh();
+        }
+
+        public void DeleteWord()
+        {
+            wordsList.Remove(_selectedItem);
             ViewList.View.Refresh();
         }
 

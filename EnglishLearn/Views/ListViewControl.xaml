@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="EnglishLearn.Views.ListViewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EnglishLearn.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ListView Name="View1" FontSize="20" ItemsSource="{Binding ViewList.View}" SelectedItem="{Binding SelectedItemWords,UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Слово" DisplayMemberBinding="{Binding Word}" Width="222"></GridViewColumn>
+                    <GridViewColumn Header="Перевод" DisplayMemberBinding="{Binding Translation}" Width="222"></GridViewColumn>
+                    <GridViewColumn Header="Транскрипция" DisplayMemberBinding="{Binding Transcription}" Width="242"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Command="{Binding deleteCommand}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnglishLearn.Views"
         xmlns:ViewModels="clr-namespace:EnglishLearn.ViewModels"
-        xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:command1="http://www.galasoft.ch/mvvmlight"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900">
     <Window.DataContext>
@@ -15,7 +14,7 @@
     </Window.DataContext>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <command1:EventToCommand Command="{Binding WindowClosing}" PassEventArgsToCommand="True"/>
+            <command:EventToCommand Command="{Binding WindowClosing}" PassEventArgsToCommand="True"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid >
@@ -28,29 +27,20 @@
             <RowDefinition/>
             <RowDefinition Height="31"/>
             <RowDefinition Height="502"/>
-            
         </Grid.RowDefinitions>
-        <ListView FontSize="20" ItemsSource="{Binding ViewList.View}" Grid.Row="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Слово" DisplayMemberBinding="{Binding Word}" Width="222"></GridViewColumn>
-                    <GridViewColumn Header="Перевод" DisplayMemberBinding="{Binding Translation}" Width="222"></GridViewColumn>
-                    <GridViewColumn Header="Транскрипция" DisplayMemberBinding="{Binding Transcription}" Width="242"></GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <local:ListViewControl Grid.Row="2"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,2,0,0">
-            <TextBox Text="{Binding AddWord, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="20" Width="222"/>
-            <TextBox Text="{Binding AddTranslation,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="20" Width="223"/>
-            <TextBox Text="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" FontSize="20" Width="214"/>
+            <TextBox Name="TextBox1" Text="{Binding AddWord, UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="222">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <command:EventToCommand Command="{Binding SearchCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBox Name="TextBox2" Text="{Binding AddTranslation,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="223"/>
+            <TextBox Name="TextBox3" Text="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="214"/>
             <Button Width="25" Content="+" Focusable="False" Command="{Binding buttonCommand}" />
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.RowSpan="3">
-            <Button Height="31" Margin="2" Content="Сортировка по дате" Command="{Binding sortCommand}" CommandParameter="1"/>
-            <Button Height="31" Margin="2" Content="Сортировка по алфавиту" Command="{Binding sortCommand}" CommandParameter="2"/>
-            <Button Height="31" Margin="2" Content="Сортировка по переводу" Command="{Binding sortCommand}" CommandParameter="3"/>
-        </StackPanel>
-        
+        <local:SortButtonsControl Grid.Column="1" Grid.RowSpan="3"/>
     </Grid>
-    
 </Window>

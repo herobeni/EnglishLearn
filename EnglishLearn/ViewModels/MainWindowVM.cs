@@ -40,43 +40,7 @@ namespace EnglishLearn.ViewModels
                     });
             }
         }
-        public ICommand SearchCommand
-        {
-            get
-            {
-                return new RelayCommand<CancelEventArgs>(
-                    (args) =>
-                    {
-                        wordsSearch= new ObservableCollection<Words>();
-                        if(AddWord == null && AddTranslation == null && AddTranscription == null)
-                        {
-                            ViewList.Source = wordsList;
-                            ViewList.View.Refresh();
-                        }
-                        else
-                        {
-                            AddWord = AddWord ?? " ";
-                            AddTranslation = AddTranslation ?? " ";
-                            AddTranslation = AddTranslation ?? " ";
-                            var SearchWords = from Words in wordsList
-                                where Words.Word.ToLower().StartsWith(AddWord.ToLower()) 
-                                      ||
-                                      Words.Translation.ToLower().StartsWith(AddTranslation.ToLower()) 
-                                      ||
-                                      Words.Transcription.ToLower().StartsWith(AddTranscription.ToLower())
-                                select Words;
-                            foreach(var VARIABLE in SearchWords)
-                            {
-                                wordsSearch.Add(VARIABLE);
-                            }
-
-                            ViewList.Source = wordsSearch;
-                            ViewList.View.Refresh();
-                        }
-
-                    });
-            }
-        }
+        
         private string _addWord;
         public string AddWord
         {

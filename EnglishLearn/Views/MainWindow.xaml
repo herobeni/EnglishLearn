@@ -30,10 +30,27 @@
         </Grid.RowDefinitions>
         <local:ListViewControl Grid.Row="2"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,2,0,0">
-            <TextBox Name="TextBox1" Text="{Binding AddWord, UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="222"/>
-
-            <TextBox Name="TextBox2" Text="{Binding AddTranslation,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="223"/>
-            <TextBox Name="TextBox3" Text="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="214"/>
+            <TextBox Name="TextBox1" Text="{Binding AddWord, UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="222">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <command:EventToCommand Command="{Binding SearchCommand}" CommandParameter="{Binding AddWord,UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBox Name="TextBox2" Text="{Binding AddTranslation,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="223">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <command:EventToCommand Command="{Binding SearchCommand}" CommandParameter="{Binding AddTranslation, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBox Name="TextBox3" Text="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}"  TextAlignment="Center" FontSize="20" Width="214">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <command:EventToCommand Command="{Binding SearchCommand}" CommandParameter="{Binding AddTranscription,UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <Button Width="25" Content="+" Focusable="False" Command="{Binding buttonCommand}" />
         </StackPanel>
         <local:SortButtonsControl Grid.Column="1" Grid.RowSpan="3"/>

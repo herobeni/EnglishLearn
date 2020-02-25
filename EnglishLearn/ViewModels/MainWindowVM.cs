@@ -44,28 +44,37 @@ namespace EnglishLearn.ViewModels
         {
             get
             {
-                return new RelayCommand<CancelEventArgs>(
-                    (args) =>
+                return new RelayCommand<string>(
+                    (text) =>
                     {
                         wordsSearch= new ObservableCollection<Words>();
-                        if(AddWord == null && AddTranslation == null && AddTranscription == null)
+                        if(text==null)
                         {
                             ViewList.Source = wordsList;
                             ViewList.View.Refresh();
                         }
                         else
                         {
-                            AddWord = AddWord ?? " ";
-                            AddTranslation = AddTranslation ?? " ";
-                            AddTranslation = AddTranslation ?? " ";
-                            var SearchWords = from Words in wordsList
-                                where Words.Word.ToLower().StartsWith(AddWord.ToLower()) 
-                                      ||
-                                      Words.Translation.ToLower().StartsWith(AddTranslation.ToLower()) 
-                                      ||
-                                      Words.Transcription.ToLower().StartsWith(AddTranscription.ToLower())
+                            IEnumerable<Words> SearchWords=null;
+                            if(text==AddWord)
+                            {
+                                SearchWords = from Words in wordsList
+                                where Words.Word.ToLower().StartsWith(text.ToLower())
                                 select Words;
-                            foreach(var VARIABLE in SearchWords)
+                            }
+                            if (text == AddTranslation)
+                            {
+                                SearchWords = from Words in wordsList
+                                    where Words.Translation.ToLower().StartsWith(text.ToLower())
+                                    select Words;
+                            }
+                            if (text == AddTranscription)
+                            {
+                                SearchWords = from Words in wordsList
+                                    where Words.Transcription.ToLower().StartsWith(text.ToLower())
+                                    select Words;
+                            }
+                            foreach (var VARIABLE in SearchWords)
                             {
                                 wordsSearch.Add(VARIABLE);
                             }
@@ -77,7 +86,7 @@ namespace EnglishLearn.ViewModels
                     });
             }
         }
-        private string _addWord;
+        private string _addWord="";
         public string AddWord
         {
             get { return _addWord; }
@@ -87,7 +96,7 @@ namespace EnglishLearn.ViewModels
                 RaisePropertyChanged("AddWord");
             }
         }
-        private string _addTranslation;
+        private string _addTranslation="";
         public string AddTranslation
         {
             get { return _addTranslation; }
@@ -97,7 +106,7 @@ namespace EnglishLearn.ViewModels
                 RaisePropertyChanged("AddTranslation");
             }
         }
-        private string _addTranscription;
+        private string _addTranscription="";
         public string AddTranscription
         {
             get { return _addTranscription; }

@@ -13,7 +13,7 @@ namespace EnglishLearn.Models
         public string Translation { get; set; }
         public string Transcription { get; set; }
         public DateTime Date { get; }
-
+        public List<Tags> Tagses { get; set; }
         public Words(string w,string translation,string transcription)
         {
             Word = w;

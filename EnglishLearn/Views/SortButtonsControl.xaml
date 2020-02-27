@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel >
-            <Button Height="31" Margin="2" Content="Сортировка по дате" Command="{Binding sortCommand}" CommandParameter="1"/>
-            <Button Height="31" Margin="2" Content="Сортировка по алфавиту" Command="{Binding sortCommand}" CommandParameter="2"/>
-            <Button Height="31" Margin="2" Content="Сортировка по переводу" Command="{Binding sortCommand}" CommandParameter="3"/>
+            <Button Height="31" Margin="1" Content="Сортировка по дате" Command="{Binding sortCommand}" CommandParameter="1"/>
+            <Button Height="31" Margin="1" Content="Сортировка по алфавиту" Command="{Binding sortCommand}" CommandParameter="2"/>
+            <Button Height="31" Margin="1" Content="Сортировка по переводу" Command="{Binding sortCommand}" CommandParameter="3"/>
         </StackPanel>
     </Grid>
 </UserControl>

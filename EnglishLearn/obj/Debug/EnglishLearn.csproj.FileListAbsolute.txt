@@ -48,3 +48,11 @@ C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\ListViewCo
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\SortButtonsControl.g.cs
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\ListViewControl.baml
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\SortButtonsControl.baml
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\TagsControl.g.cs
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\Views\TagsControl.baml
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignColors.dll
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignColors.pdb
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\App.baml

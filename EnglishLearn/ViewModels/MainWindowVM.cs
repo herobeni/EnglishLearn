@@ -21,10 +21,10 @@ namespace EnglishLearn.ViewModels
 {
     class MainWindowVM:BindableBase
     {
-        public ICommand buttonCommand { get; private set; }
+        public ICommand newWordCommand { get; private set; }
         public ICommand sortCommand { get; private set; }
         public ICommand deleteCommand { get; private set; }
-        public ICommand WindowClosing
+        public ICommand Serialization
         {
             get
             {
@@ -40,6 +40,7 @@ namespace EnglishLearn.ViewModels
                     });
             }
         }
+
         public ICommand SearchCommand
         {
             get
@@ -48,7 +49,7 @@ namespace EnglishLearn.ViewModels
                     (text) =>
                     {
                         wordsSearch= new ObservableCollection<Words>();
-                        if(text==null)
+                        if(text=="")
                         {
                             ViewList.Source = wordsList;
                             ViewList.View.Refresh();
@@ -96,6 +97,7 @@ namespace EnglishLearn.ViewModels
                 RaisePropertyChanged("AddWord");
             }
         }
+
         private string _addTranslation="";
         public string AddTranslation
         {
@@ -106,6 +108,7 @@ namespace EnglishLearn.ViewModels
                 RaisePropertyChanged("AddTranslation");
             }
         }
+
         private string _addTranscription="";
         public string AddTranscription
         {
@@ -116,6 +119,7 @@ namespace EnglishLearn.ViewModels
                 RaisePropertyChanged("AddTranscription");
             }
         }
+
         private Words _selectedItem;
         public Words SelectedItemWords
         {
@@ -127,8 +131,11 @@ namespace EnglishLearn.ViewModels
             }
         }
         public CollectionViewSource ViewList { get; set; }
+
         private ObservableCollection<Words> wordsSearch;
+
         private ObservableCollection<Words> wordsList;
+
         public ReadOnlyObservableCollection<Words> WordsList
         {
             get { return new ReadOnlyObservableCollection<Words>(wordsList); }
@@ -144,11 +151,12 @@ namespace EnglishLearn.ViewModels
                 else wordsList= new ObservableCollection<Words>();
             }
             deleteCommand= new DeleteCommand(this);
-            buttonCommand= new AddWordCommand(this);
+            newWordCommand = new AddWordCommand(this);
             sortCommand = new SortCommand(this);
             ViewList= new CollectionViewSource();
             ViewList.Source = wordsList;
         }
+
         public void AddNewWord()
         {
             wordsList.Add(new Words(AddWord,AddTranslation,AddTranscription));

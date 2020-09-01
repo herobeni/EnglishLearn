@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using EnglishLearn.ViewModels;
 
@@ -10,7 +6,7 @@ namespace EnglishLearn.Commands
 {
     class SortCommand : ICommand
     {
-        private MainWindowVM mainWindowVm;
+        private MainWindowVM _mainWindowVm;
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -19,7 +15,7 @@ namespace EnglishLearn.Commands
 
         public SortCommand(MainWindowVM m)
         {
-            mainWindowVm = m;
+            _mainWindowVm = m;
         }
         public bool CanExecute(object parameter)
         {
@@ -28,8 +24,8 @@ namespace EnglishLearn.Commands
         public void Execute(object parameter)
         {
             string i = parameter.ToString();
-            mainWindowVm.Sort(i);
+            _mainWindowVm.Sort(i);
         }
-        
+
     }
 }

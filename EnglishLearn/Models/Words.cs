@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnglishLearn.Models
 {
@@ -14,12 +11,12 @@ namespace EnglishLearn.Models
         public string Transcription { get; set; }
         public DateTime Date { get; }
         public List<Tags> Tagses { get; set; }
-        public Words(string w,string translation,string transcription)
+        public Words(string word, string translation, string transcription)
         {
-            Word = w;
+            Word = word;
             Translation = translation;
             Transcription = transcription;
-            Date=DateTime.Now;
+            Date = DateTime.Now;
         }
     }
 }

@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using EnglishLearn.Commands;
 using EnglishLearn.Models;
-using EnglishLearn.Views;
 using GalaSoft.MvvmLight.CommandWpf;
 using Prism.Mvvm;
 
 namespace EnglishLearn.ViewModels
 {
-    class MainWindowVM:BindableBase
+    class MainWindowVM : BindableBase
     {
         public ICommand newWordCommand { get; private set; }
         public ICommand sortCommand { get; private set; }
@@ -31,12 +25,12 @@ namespace EnglishLearn.ViewModels
                 return new RelayCommand<CancelEventArgs>(
                     (args) =>
                     {
-                        using(FileStream fl = new FileStream("Words.dat",FileMode.Create))
+                        using (FileStream fl = new FileStream("Words.dat", FileMode.Create))
                         {
                             BinaryFormatter formatter = new BinaryFormatter();
-                            formatter.Serialize(fl,wordsList);
+                            formatter.Serialize(fl, _wordsList);
                         }
-                        
+
                     });
             }
         }
@@ -48,46 +42,46 @@ namespace EnglishLearn.ViewModels
                 return new RelayCommand<string>(
                     (text) =>
                     {
-                        wordsSearch= new ObservableCollection<Words>();
-                        if(text=="")
+                        _wordsSearch = new ObservableCollection<Words>();
+                        if (text == "")
                         {
-                            ViewList.Source = wordsList;
+                            ViewList.Source = _wordsList;
                             ViewList.View.Refresh();
                         }
                         else
                         {
-                            IEnumerable<Words> SearchWords=null;
-                            if(text==AddWord)
+                            IEnumerable<Words> SearchWords = null;
+                            if (text == AddWord)
                             {
-                                SearchWords = from Words in wordsList
-                                where Words.Word.ToLower().StartsWith(text.ToLower())
-                                select Words;
+                                SearchWords = from Words in _wordsList
+                                              where Words.Word.ToLower().StartsWith(text.ToLower())
+                                              select Words;
                             }
                             if (text == AddTranslation)
                             {
-                                SearchWords = from Words in wordsList
-                                    where Words.Translation.ToLower().StartsWith(text.ToLower())
-                                    select Words;
+                                SearchWords = from Words in _wordsList
+                                              where Words.Translation.ToLower().StartsWith(text.ToLower())
+                                              select Words;
                             }
                             if (text == AddTranscription)
                             {
-                                SearchWords = from Words in wordsList
-                                    where Words.Transcription.ToLower().StartsWith(text.ToLower())
-                                    select Words;
+                                SearchWords = from Words in _wordsList
+                                              where Words.Transcription.ToLower().StartsWith(text.ToLower())
+                                              select Words;
                             }
                             foreach (var VARIABLE in SearchWords)
                             {
-                                wordsSearch.Add(VARIABLE);
+                                _wordsSearch.Add(VARIABLE);
                             }
 
-                            ViewList.Source = wordsSearch;
+                            ViewList.Source = _wordsSearch;
                             ViewList.View.Refresh();
                         }
 
                     });
             }
         }
-        private string _addWord="";
+        private string _addWord = "";
         public string AddWord
         {
             get { return _addWord; }
@@ -98,7 +92,7 @@ namespace EnglishLearn.ViewModels
             }
         }
 
-        private string _addTranslation="";
+        private string _addTranslation = "";
         public string AddTranslation
         {
             get { return _addTranslation; }
@@ -109,7 +103,7 @@ namespace EnglishLearn.ViewModels
             }
         }
 
-        private string _addTranscription="";
+        private string _addTranscription = "";
         public string AddTranscription
         {
             get { return _addTranscription; }
@@ -132,40 +126,39 @@ namespace EnglishLearn.ViewModels
         }
         public CollectionViewSource ViewList { get; set; }
 
-        private ObservableCollection<Words> wordsSearch;
+        private ObservableCollection<Words> _wordsSearch;
 
-        private ObservableCollection<Words> wordsList;
+        private ObservableCollection<Words> _wordsList;
 
         public ReadOnlyObservableCollection<Words> WordsList
         {
-            get { return new ReadOnlyObservableCollection<Words>(wordsList); }
+            get { return new ReadOnlyObservableCollection<Words>(_wordsList); }
         }
         public MainWindowVM()
         {
-            
-            using (FileStream fs = new FileStream("Words.dat",FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream("Words.dat", FileMode.OpenOrCreate))
             {
                 BinaryFormatter formater = new BinaryFormatter();
-                if(fs.Length>0)
-                wordsList = (ObservableCollection<Words>) formater.Deserialize(fs);
-                else wordsList= new ObservableCollection<Words>();
+                if (fs.Length > 0)
+                    _wordsList = (ObservableCollection<Words>)formater.Deserialize(fs);
+                else _wordsList = new ObservableCollection<Words>();
             }
-            deleteCommand= new DeleteCommand(this);
+            deleteCommand = new DeleteCommand(this);
             newWordCommand = new AddWordCommand(this);
             sortCommand = new SortCommand(this);
-            ViewList= new CollectionViewSource();
-            ViewList.Source = wordsList;
+            ViewList = new CollectionViewSource();
+            ViewList.Source = _wordsList;
         }
 
         public void AddNewWord()
         {
-            wordsList.Add(new Words(AddWord,AddTranslation,AddTranscription));
+            _wordsList.Add(new Words(AddWord, AddTranslation, AddTranscription));
             ViewList.View.Refresh();
         }
 
         public void DeleteWord()
         {
-            wordsList.Remove(_selectedItem);
+            _wordsList.Remove(_selectedItem);
             ViewList.View.Refresh();
         }
 
@@ -174,22 +167,25 @@ namespace EnglishLearn.ViewModels
             var SortWords = from Words in WordsList select Words;
             switch (mode)
             {
-                case "1": SortWords = from Words in wordsList orderby Words.Date select Words;
+                case "1":
+                    SortWords = from Words in _wordsList orderby Words.Date select Words;
                     break;
-                case "2": SortWords = from Words in wordsList orderby Words.Word select Words;
+                case "2":
+                    SortWords = from Words in _wordsList orderby Words.Word select Words;
                     break;
-                case "3": SortWords = from Words in wordsList orderby Words.Translation select Words;
+                case "3":
+                    SortWords = from Words in _wordsList orderby Words.Translation select Words;
                     break;
             }
-            wordsList=new ObservableCollection<Words>();
-            foreach(var VARIABLE in SortWords)
+            _wordsList = new ObservableCollection<Words>();
+            foreach (var VARIABLE in SortWords)
             {
-                wordsList.Add(VARIABLE);
+                _wordsList.Add(VARIABLE);
             }
 
-            ViewList.Source = wordsList;
+            ViewList.Source = _wordsList;
             ViewList.View.Refresh();
         }
-        
+
     }
 }

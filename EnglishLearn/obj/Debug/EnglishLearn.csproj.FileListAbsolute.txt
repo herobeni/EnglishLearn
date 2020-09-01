@@ -56,3 +56,4 @@ C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignCo
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\bin\Debug\MaterialDesignThemes.Wpf.xml
 C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\App.baml
+C:\Users\danil\source\repos\EnglishLearn\EnglishLearn\obj\Debug\EnglishLearn.csproj.CoreCompileInputs.cache

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using EnglishLearn.ViewModels;
 
@@ -10,11 +6,11 @@ namespace EnglishLearn.Commands
 {
     class AddWordCommand : ICommand
     {
-        private MainWindowVM mainWindowVm;
+        private MainWindowVM _mainWindowVm;
 
         public AddWordCommand(MainWindowVM main)
         {
-            mainWindowVm = main;
+            _mainWindowVm = main;
         }
         public bool CanExecute(object parameter)
         {
@@ -28,8 +24,8 @@ namespace EnglishLearn.Commands
 
         public void Execute(object parameter)
         {
-            mainWindowVm.AddNewWord();
-            
+            _mainWindowVm.AddNewWord();
+
         }
     }
 }

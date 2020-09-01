@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using EnglishLearn.Models;
 using EnglishLearn.ViewModels;
 
 namespace EnglishLearn.Commands
 {
-    class DeleteCommand:ICommand
+    class DeleteCommand : ICommand
     {
-        private MainWindowVM mainWindowVm;
+        private MainWindowVM _mainWindowVm;
 
         public DeleteCommand(MainWindowVM main)
         {
-            mainWindowVm = main;
+            _mainWindowVm = main;
         }
         public bool CanExecute(object parameter)
         {
@@ -29,7 +24,7 @@ namespace EnglishLearn.Commands
 
         public void Execute(object parameter)
         {
-            mainWindowVm.DeleteWord();
+            _mainWindowVm.DeleteWord();
         }
     }
 }
